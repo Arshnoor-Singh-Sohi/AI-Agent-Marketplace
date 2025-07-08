@@ -122,7 +122,7 @@ AI-AGENTS-MARKETPLACE/
 │   │       ├── FilterSection.jsx
 │   │       └── ProjectsGrid.jsx
 │   ├── 📂 data/            # Data management
-│   │   ├── projects.js     # ADD YOUR PROJECTS HERE
+│   │   ├── projects.js     # My PROJECTS HERE
 │   │   ├── categories.js   # Project categories
 │   │   ├── skills.js       # Technology skills
 │   │   └── constants.js    # App constants
