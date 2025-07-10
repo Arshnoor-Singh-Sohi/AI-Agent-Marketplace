@@ -1,4 +1,3 @@
-
 // src/components/sections/ProjectsGrid.jsx
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -9,13 +8,17 @@ const ProjectsGrid = ({ projects, isLoading }) => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center py-20">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <motion.div
+          className="w-16 h-16 border-4 border-cyan-200 border-t-cyan-600 rounded-full"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+        />
       </div>
     );
   }
 
   return (
-    <section className="py-12">
+    <section className="py-12" id="projects">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-8">
           <motion.h2 

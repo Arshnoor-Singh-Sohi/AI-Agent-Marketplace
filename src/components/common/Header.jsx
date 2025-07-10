@@ -4,67 +4,199 @@ import { motion } from 'framer-motion';
 import { CONTACT_LINKS } from '../../data/constants';
 
 const Header = () => {
-  const [darkMode, setDarkMode] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
+  // Force dark mode always
   useEffect(() => {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    setDarkMode(prefersDark);
-    if (prefersDark) {
-      document.documentElement.classList.add('dark');
-    }
+    document.documentElement.classList.add('dark');
   }, []);
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-    document.documentElement.classList.toggle('dark');
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navItems = [
+    { name: 'Portfolio', href: CONTACT_LINKS.portfolio, icon: '🌐' },
+    { name: 'GitHub', href: CONTACT_LINKS.github, icon: '⚡' },
+    { name: 'Blog', href: CONTACT_LINKS.hashnode, icon: '📝' },
+  ];
 
   return (
     <motion.header 
-      className="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-b border-gray-200 dark:border-gray-700"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        isScrolled 
+          ? 'py-3' 
+          : 'py-4'
+      }`}
+      style={{
+        backgroundColor: `rgba(0, 0, 0, ${isScrolled ? 0.15 : 0.1})`,
+        backdropFilter: `blur(${isScrolled ? 20 : 16}px)`,
+        WebkitBackdropFilter: `blur(${isScrolled ? 20 : 16}px)`,
+      }}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <div className="flex items-center space-x-4">
-            <motion.div 
-              className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
-              whileHover={{ scale: 1.05 }}
+      {/* Ultra-subtle glass overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-white/[0.02] via-cyan-500/[0.03] to-white/[0.02]" />
+      
+      {/* Glass border */}
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center">
+          {/* Logo Section */}
+          <motion.div 
+            className="flex items-center space-x-3"
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.2 }}
+          >
+            {/* Logo Icon */}
+            <motion.div
+              className="relative"
+              animate={{ 
+                rotateY: [0, 360],
+              }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                ease: "linear",
+              }}
             >
-              AI Agents Store
+              <div className="w-10 h-10 bg-gradient-to-br from-cyan-400/80 to-emerald-500/80 backdrop-blur-md rounded-xl flex items-center justify-center shadow-xl border border-white/20">
+                <motion.span 
+                  className="text-xl font-bold text-white drop-shadow-lg"
+                  animate={{
+                    textShadow: [
+                      '0 0 10px rgba(6, 182, 212, 0.8)',
+                      '0 0 20px rgba(16, 185, 129, 0.8)',
+                      '0 0 10px rgba(6, 182, 212, 0.8)',
+                    ],
+                  }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                >
+                  AI
+                </motion.span>
+              </div>
             </motion.div>
-            <span className="hidden sm:block text-sm text-gray-600 dark:text-gray-400">
-              by Arshnoor Singh Sohi
-            </span>
-          </div>
+
+            {/* Logo Text */}
+            <div className="flex flex-col">
+              <motion.div 
+                className="text-xl font-black bg-gradient-to-r from-white via-cyan-300 to-emerald-300 bg-clip-text text-transparent drop-shadow-lg"
+                style={{
+                  textShadow: '0 2px 4px rgba(0,0,0,0.5)',
+                }}
+                whileHover={{ 
+                  backgroundSize: '150% 150%',
+                }}
+                transition={{ duration: 0.3 }}
+              >
+                AI Agents Store
+              </motion.div>
+              <motion.span 
+                className="text-xs text-gray-300/80 -mt-1 drop-shadow-sm"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.8 }}
+                transition={{ delay: 0.5 }}
+              >
+                by Arshnoor Singh Sohi
+              </motion.span>
+            </div>
+          </motion.div>
           
-          <div className="flex items-center space-x-4">
-            <a
-              href={CONTACT_LINKS.portfolio}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+          {/* Navigation */}
+          <div className="flex items-center space-x-1">
+            {/* Nav Items */}
+            {navItems.map((item, index) => (
+              <motion.a
+                key={item.name}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative px-4 py-2 rounded-xl text-white/80 hover:text-white transition-all duration-300 flex items-center gap-2"
+                whileHover={{ 
+                  scale: 1.05,
+                  y: -2,
+                }}
+                whileTap={{ scale: 0.95 }}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+              >
+                {/* Glass hover background */}
+                <motion.div
+                  className="absolute inset-0 bg-white/10 backdrop-blur-md rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 border border-white/20"
+                  whileHover={{ scale: 1.05 }}
+                />
+                
+                {/* Content */}
+                <span className="relative z-10 flex items-center gap-2 text-sm font-medium drop-shadow-lg">
+                  <motion.span
+                    animate={{ 
+                      rotate: [0, 10, -10, 0],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      delay: index * 0.5,
+                    }}
+                  >
+                    {item.icon}
+                  </motion.span>
+                  <span className="hidden sm:inline">{item.name}</span>
+                </span>
+
+                {/* Glow effect on hover */}
+                <motion.div
+                  className="absolute inset-0 bg-cyan-400/20 rounded-xl blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-300"
+                  whileHover={{ scale: 1.2 }}
+                />
+              </motion.a>
+            ))}
+
+            {/* Divider - Removed since no dark mode toggle */}
+            
+            {/* Professional status indicator instead of dark mode toggle */}
+            <motion.div
+              className="flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-md rounded-xl border border-white/20"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
             >
-              Portfolio
-            </a>
-            <a
-              href={CONTACT_LINKS.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-            >
-              GitHub
-            </a>
-            <button
-              onClick={toggleDarkMode}
-              className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-            >
-              {darkMode ? '☀️' : '🌙'}
-            </button>
+              <motion.div 
+                className="w-2 h-2 bg-emerald-400 rounded-full"
+                animate={{
+                  scale: [1, 1.2, 1],
+                  boxShadow: [
+                    '0 0 5px rgba(16, 185, 129, 0.5)',
+                    '0 0 15px rgba(16, 185, 129, 0.8)',
+                    '0 0 5px rgba(16, 185, 129, 0.5)',
+                  ],
+                }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+              <span className="text-sm text-emerald-400 font-medium drop-shadow-sm">Live</span>
+            </motion.div>
           </div>
         </div>
+      </div>
+
+      {/* Mobile Menu Button (if needed in future) */}
+      <div className="hidden">
+        <motion.button
+          className="p-2 rounded-lg text-white hover:bg-white/10 backdrop-blur-md border border-white/20 transition-colors md:hidden"
+          whileTap={{ scale: 0.95 }}
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </motion.button>
       </div>
     </motion.header>
   );
