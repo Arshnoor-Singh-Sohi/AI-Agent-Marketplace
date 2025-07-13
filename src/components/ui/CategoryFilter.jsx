@@ -11,7 +11,7 @@ const CategoryFilter = ({ selectedCategory, onCategoryChange }) => {
       {/* Mobile dropdown */}
       <div className="block lg:hidden">
         <motion.div
-          className="relative bg-white/5 backdrop-blur-lg border border-white/20 rounded-2xl overflow-hidden"
+          className="relative bg-white/5 backdrop-blur-lg border border-white/20 rounded-xl overflow-hidden"
           whileHover={{ 
             boxShadow: "0 0 20px rgba(6, 182, 212, 0.2)" 
           }}
@@ -20,22 +20,22 @@ const CategoryFilter = ({ selectedCategory, onCategoryChange }) => {
           <select
             value={selectedCategory}
             onChange={(e) => onCategoryChange(e.target.value)}
-            className="relative w-full px-4 py-4 bg-transparent text-white focus:outline-none appearance-none cursor-pointer font-medium drop-shadow-sm"
+            className="relative w-full px-4 py-3 sm:py-4 bg-transparent text-white focus:outline-none appearance-none cursor-pointer font-medium drop-shadow-sm text-sm sm:text-base"
             style={{
               textShadow: '0 1px 2px rgba(0,0,0,0.5)',
             }}
           >
             {CATEGORIES.map((category) => (
-              <option key={category.id} value={category.name} className="bg-gray-900 text-white">
+              <option key={category.id} value={category.name} className="bg-gray-900 text-white py-2">
                 {category.icon} {category.name}
               </option>
             ))}
           </select>
           
           {/* Custom dropdown arrow */}
-          <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+          <div className="absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
             <motion.svg 
-              className="w-5 h-5 text-cyan-400" 
+              className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" 
               fill="none" 
               stroke="currentColor" 
               viewBox="0 0 24 24"
@@ -48,12 +48,12 @@ const CategoryFilter = ({ selectedCategory, onCategoryChange }) => {
       </div>
 
       {/* Desktop button group */}
-      <div className="hidden lg:flex flex-wrap gap-3">
+      <div className="hidden lg:flex flex-wrap gap-2 xl:gap-3">
         {mainCategories.map((category, index) => (
           <motion.button
             key={category.id}
             onClick={() => onCategoryChange(category.name)}
-            className={`group relative px-5 py-3 rounded-2xl transition-all duration-300 flex items-center gap-3 font-semibold text-sm backdrop-blur-lg border overflow-hidden ${
+            className={`group relative px-4 xl:px-5 py-2 xl:py-3 rounded-xl xl:rounded-2xl transition-all duration-300 flex items-center gap-2 xl:gap-3 font-semibold text-sm xl:text-base backdrop-blur-lg border overflow-hidden ${
               selectedCategory === category.name
                 ? 'bg-gradient-to-r from-cyan-500/20 to-emerald-500/20 border-cyan-400/40 text-white shadow-lg'
                 : 'bg-white/5 border-white/20 text-white/80 hover:text-white hover:border-cyan-400/30 hover:bg-white/10'
@@ -74,7 +74,7 @@ const CategoryFilter = ({ selectedCategory, onCategoryChange }) => {
             <AnimatePresence>
               {selectedCategory === category.name && (
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 via-emerald-400/20 to-teal-400/20 rounded-2xl"
+                  className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 via-emerald-400/20 to-teal-400/20 rounded-xl xl:rounded-2xl"
                   layoutId="activeCategory"
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -88,9 +88,9 @@ const CategoryFilter = ({ selectedCategory, onCategoryChange }) => {
             <div className="absolute inset-0 bg-gradient-to-r from-white/5 via-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             
             {/* Content */}
-            <span className="relative z-10 flex items-center gap-3">
+            <span className="relative z-10 flex items-center gap-2 xl:gap-3">
               <motion.span
-                className="text-lg"
+                className="text-base xl:text-lg"
                 animate={{ 
                   rotate: selectedCategory === category.name ? [0, 10, -10, 0] : 0,
                   scale: selectedCategory === category.name ? [1, 1.1, 1] : 1,
@@ -115,7 +115,7 @@ const CategoryFilter = ({ selectedCategory, onCategoryChange }) => {
             {/* Selection indicator */}
             {selectedCategory === category.name && (
               <motion.div
-                className="absolute -right-1 -top-1 w-3 h-3 bg-gradient-to-r from-cyan-400 to-emerald-400 rounded-full shadow-lg"
+                className="absolute -right-1 -top-1 w-2 h-2 xl:w-3 xl:h-3 bg-gradient-to-r from-cyan-400 to-emerald-400 rounded-full shadow-lg"
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 exit={{ scale: 0 }}
@@ -137,7 +137,7 @@ const CategoryFilter = ({ selectedCategory, onCategoryChange }) => {
 
             {/* Hover glow effect */}
             <motion.div
-              className="absolute inset-0 bg-cyan-400/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-300"
+              className="absolute inset-0 bg-cyan-400/10 rounded-xl xl:rounded-2xl blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-300"
               whileHover={{ scale: 1.2 }}
             />
           </motion.button>
@@ -152,7 +152,7 @@ const CategoryFilter = ({ selectedCategory, onCategoryChange }) => {
             transition={{ duration: 0.5, delay: 0.5 }}
           >
             <motion.button
-              className="px-5 py-3 rounded-2xl bg-white/5 backdrop-blur-lg border border-white/20 hover:border-cyan-400/30 text-white/80 hover:text-white transition-all duration-300 flex items-center gap-3 font-semibold text-sm hover:bg-white/10"
+              className="px-4 xl:px-5 py-2 xl:py-3 rounded-xl xl:rounded-2xl bg-white/5 backdrop-blur-lg border border-white/20 hover:border-cyan-400/30 text-white/80 hover:text-white transition-all duration-300 flex items-center gap-2 xl:gap-3 font-semibold text-sm xl:text-base hover:bg-white/10"
               whileHover={{ 
                 scale: 1.05, 
                 y: -2,
@@ -160,9 +160,10 @@ const CategoryFilter = ({ selectedCategory, onCategoryChange }) => {
               }}
               whileTap={{ scale: 0.95 }}
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-white/5 via-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
-              <span className="relative z-10 flex items-center gap-3">
+              <div className="absolute inset-0 bg-gradient-to-r from-white/5 via-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl xl:rounded-2xl" />
+              <span className="relative z-10 flex items-center gap-2 xl:gap-3">
                 <motion.span
+                  className="text-base xl:text-lg"
                   animate={{ rotate: [0, 360] }}
                   transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
                 >
@@ -180,6 +181,93 @@ const CategoryFilter = ({ selectedCategory, onCategoryChange }) => {
             </motion.button>
           </motion.div>
         )}
+      </div>
+
+      {/* Medium screen horizontal scroll */}
+      <div className="hidden md:block lg:hidden">
+        <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+          {mainCategories.map((category, index) => (
+            <motion.button
+              key={category.id}
+              onClick={() => onCategoryChange(category.name)}
+              className={`group relative px-4 py-3 rounded-xl transition-all duration-300 flex items-center gap-3 font-semibold text-sm backdrop-blur-lg border overflow-hidden whitespace-nowrap flex-shrink-0 ${
+                selectedCategory === category.name
+                  ? 'bg-gradient-to-r from-cyan-500/20 to-emerald-500/20 border-cyan-400/40 text-white shadow-lg'
+                  : 'bg-white/5 border-white/20 text-white/80 hover:text-white hover:border-cyan-400/30 hover:bg-white/10'
+              }`}
+              whileHover={{ 
+                scale: 1.05, 
+                y: -2,
+                boxShadow: selectedCategory === category.name 
+                  ? "0 10px 30px rgba(6, 182, 212, 0.3)" 
+                  : "0 5px 20px rgba(6, 182, 212, 0.15)"
+              }}
+              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+            >
+              {/* Active background glow */}
+              <AnimatePresence>
+                {selectedCategory === category.name && (
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 via-emerald-400/20 to-teal-400/20 rounded-xl"
+                    layoutId="activeCategoryMd"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                )}
+              </AnimatePresence>
+
+              {/* Glass overlay */}
+              <div className="absolute inset-0 bg-gradient-to-r from-white/5 via-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              
+              {/* Content */}
+              <span className="relative z-10 flex items-center gap-3">
+                <motion.span
+                  className="text-lg"
+                  animate={{ 
+                    rotate: selectedCategory === category.name ? [0, 10, -10, 0] : 0,
+                    scale: selectedCategory === category.name ? [1, 1.1, 1] : 1,
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: selectedCategory === category.name ? Infinity : 0,
+                  }}
+                >
+                  {category.icon}
+                </motion.span>
+                <span 
+                  className="whitespace-nowrap drop-shadow-sm"
+                  style={{
+                    textShadow: '0 1px 2px rgba(0,0,0,0.5)',
+                  }}
+                >
+                  {category.name}
+                </span>
+              </span>
+
+              {/* Selection indicator */}
+              {selectedCategory === category.name && (
+                <motion.div
+                  className="absolute -right-1 -top-1 w-3 h-3 bg-gradient-to-r from-cyan-400 to-emerald-400 rounded-full shadow-lg"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  exit={{ scale: 0 }}
+                  transition={{ duration: 0.2 }}
+                />
+              )}
+
+              {/* Hover glow effect */}
+              <motion.div
+                className="absolute inset-0 bg-cyan-400/10 rounded-xl blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-300"
+                whileHover={{ scale: 1.2 }}
+              />
+            </motion.button>
+          ))}
+        </div>
       </div>
     </div>
   );

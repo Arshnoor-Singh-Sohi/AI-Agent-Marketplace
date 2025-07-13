@@ -44,8 +44,8 @@ const Footer = () => {
       <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent" />
       
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center">
           
           {/* Left Section - Branding */}
           <motion.div 
@@ -58,7 +58,7 @@ const Footer = () => {
             >
               {/* Logo */}
               <motion.div
-                className="w-12 h-12 bg-gradient-to-br from-cyan-400/80 to-emerald-500/80 backdrop-blur-md rounded-xl flex items-center justify-center shadow-xl border border-white/20"
+                className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-cyan-400/80 to-emerald-500/80 backdrop-blur-md rounded-xl flex items-center justify-center shadow-xl border border-white/20"
                 animate={{ 
                   rotateY: [0, 360],
                 }}
@@ -69,7 +69,7 @@ const Footer = () => {
                 }}
               >
                 <motion.span 
-                  className="text-xl font-bold text-white drop-shadow-lg"
+                  className="text-lg sm:text-xl font-bold text-white drop-shadow-lg"
                   animate={{
                     textShadow: [
                       '0 0 10px rgba(6, 182, 212, 0.8)',
@@ -85,43 +85,44 @@ const Footer = () => {
               
               {/* Brand Text */}
               <div>
-                <div className="text-xl font-black bg-gradient-to-r from-white via-cyan-300 to-emerald-300 bg-clip-text text-transparent drop-shadow-lg">
+                <div className="text-lg sm:text-xl font-black bg-gradient-to-r from-white via-cyan-300 to-emerald-300 bg-clip-text text-transparent drop-shadow-lg">
                   AI Agents Store
                 </div>
-                <div className="text-sm text-gray-300/80 drop-shadow-sm">
+                <div className="text-xs sm:text-sm text-gray-300/80 drop-shadow-sm">
                   by Arshnoor Singh Sohi
                 </div>
               </div>
             </motion.div>
             
             <motion.p 
-              className="text-gray-300/80 text-sm max-w-xs mx-auto lg:mx-0 drop-shadow-sm"
+              className="text-gray-300/80 text-sm sm:text-base max-w-md mx-auto lg:mx-0 drop-shadow-sm leading-relaxed"
               variants={itemVariants}
             >
               Explore cutting-edge AI agents and applications. Built with passion for innovation and artificial intelligence.
             </motion.p>
           </motion.div>
 
-          {/* Center Section - Social Links */}
+          {/* Right Section - Horizontal Social Links */}
           <motion.div 
-            className="text-center"
+            className="text-center lg:text-right"
             variants={itemVariants}
           >
             <motion.h3 
-              className="text-lg font-bold text-white mb-6 drop-shadow-lg"
+              className="text-base sm:text-lg font-bold text-white mb-4 sm:mb-6 drop-shadow-lg"
               variants={itemVariants}
             >
               Connect & Follow
             </motion.h3>
             
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {/* Horizontal Social Links */}
+            <div className="flex flex-wrap justify-center lg:justify-end gap-3 sm:gap-4">
               {socialLinks.map((link, index) => (
                 <motion.a
                   key={link.name}
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative p-3 bg-white/5 hover:bg-white/10 backdrop-blur-md rounded-xl border border-white/20 hover:border-cyan-400/40 transition-all duration-300"
+                  className="group relative px-3 sm:px-4 py-2 sm:py-3 bg-white/5 hover:bg-white/10 backdrop-blur-md rounded-lg sm:rounded-xl border border-white/20 hover:border-cyan-400/40 transition-all duration-300 flex items-center gap-2 sm:gap-3 touch-friendly"
                   whileHover={{ 
                     scale: 1.05, 
                     y: -3,
@@ -133,13 +134,13 @@ const Footer = () => {
                 >
                   {/* Glass glow effect */}
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-emerald-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-emerald-500/10 rounded-lg sm:rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   />
                   
                   {/* Content */}
-                  <div className="relative z-10 text-center">
+                  <div className="relative z-10 flex items-center gap-2">
                     <motion.div 
-                      className="text-2xl mb-1"
+                      className="text-lg sm:text-xl"
                       animate={{ 
                         rotate: [0, 10, -10, 0],
                       }}
@@ -151,72 +152,26 @@ const Footer = () => {
                     >
                       {link.icon}
                     </motion.div>
-                    <div className="text-xs font-medium text-white/90 drop-shadow-sm">{link.name}</div>
-                    <div className="text-xs text-gray-400/80 drop-shadow-sm">{link.description}</div>
+                    <div className="text-left">
+                      <div className="text-xs sm:text-sm font-medium text-white/90 drop-shadow-sm">{link.name}</div>
+                      <div className="text-xs text-gray-400/80 drop-shadow-sm hidden sm:block">{link.description}</div>
+                    </div>
                   </div>
                 </motion.a>
               ))}
             </div>
           </motion.div>
-
-          {/* Right Section - Tech Stack */}
-          <motion.div 
-            className="text-center lg:text-right"
-            variants={itemVariants}
-          >
-            <motion.h3 
-              className="text-lg font-bold text-white mb-6 drop-shadow-lg"
-              variants={itemVariants}
-            >
-              Built With
-            </motion.h3>
-            
-            <div className="space-y-3">
-              {[
-                { name: 'React + Vite', desc: 'Frontend Framework', icon: '⚛️' },
-                { name: 'Three.js', desc: '3D Graphics', icon: '🎮' },
-                { name: 'Framer Motion', desc: 'Smooth Animations', icon: '🎭' },
-                { name: 'TailwindCSS', desc: 'Styling System', icon: '🎨' },
-              ].map((tech, index) => (
-                <motion.div
-                  key={tech.name}
-                  className="group flex items-center justify-center lg:justify-end gap-3 p-2 bg-white/5 backdrop-blur-md rounded-lg border border-white/10 hover:border-cyan-400/30 transition-all duration-300"
-                  whileHover={{ scale: 1.02, x: -5 }}
-                  variants={itemVariants}
-                  custom={index}
-                >
-                  <div className="text-right">
-                    <div className="text-sm font-medium text-white/90 drop-shadow-sm">{tech.name}</div>
-                    <div className="text-xs text-gray-400/80 drop-shadow-sm">{tech.desc}</div>
-                  </div>
-                  <motion.div 
-                    className="text-xl"
-                    animate={{ 
-                      scale: [1, 1.1, 1],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      delay: index * 0.4,
-                    }}
-                  >
-                    {tech.icon}
-                  </motion.div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
         </div>
 
-        {/* Bottom Section */}
+        {/* Bottom Section - Smaller */}
         <motion.div 
-          className="mt-12 pt-8 border-t border-white/10"
+          className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-white/10"
           variants={itemVariants}
         >
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
             {/* Copyright */}
             <motion.div 
-              className="text-gray-400/80 text-sm drop-shadow-sm"
+              className="text-gray-400/80 text-xs sm:text-sm drop-shadow-sm text-center sm:text-left"
               variants={itemVariants}
             >
               © {new Date().getFullYear()} Arshnoor Singh Sohi. All rights reserved.
@@ -224,7 +179,7 @@ const Footer = () => {
 
             {/* Status */}
             <motion.div 
-              className="flex items-center gap-4 text-sm"
+              className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-xs sm:text-sm"
               variants={itemVariants}
             >
               <motion.div 
@@ -260,9 +215,9 @@ const Footer = () => {
         </motion.div>
       </div>
 
-      {/* Subtle background particles */}
+      {/* Subtle background particles - Fewer for smaller footer */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {Array.from({ length: 10 }).map((_, i) => (
+        {Array.from({ length: 5 }).map((_, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-cyan-400/20 rounded-full"

@@ -7,9 +7,9 @@ import { ANIMATION_VARIANTS } from '../../data/constants';
 const ProjectsGrid = ({ projects, isLoading }) => {
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center py-20">
+      <div className="flex justify-center items-center py-12 sm:py-16 md:py-20">
         <motion.div
-          className="w-16 h-16 border-4 border-cyan-200 border-t-cyan-600 rounded-full"
+          className="w-12 h-12 sm:w-16 sm:h-16 border-4 border-cyan-200 border-t-cyan-600 rounded-full"
           animate={{ rotate: 360 }}
           transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
         />
@@ -18,11 +18,12 @@ const ProjectsGrid = ({ projects, isLoading }) => {
   }
 
   return (
-    <section className="py-12" id="projects">
+    <section className="py-8 sm:py-12 md:py-16" id="projects">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center mb-8">
+        {/* Header Section */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-4 sm:gap-0">
           <motion.h2 
-            className="text-2xl font-bold text-gray-900 dark:text-white"
+            className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white"
             initial="hidden"
             animate="visible"
             variants={ANIMATION_VARIANTS.slideInLeft}
@@ -32,7 +33,7 @@ const ProjectsGrid = ({ projects, isLoading }) => {
           
           {projects.length === 0 && (
             <motion.p 
-              className="text-gray-500 dark:text-gray-400"
+              className="text-sm sm:text-base text-gray-500 dark:text-gray-400"
               initial="hidden"
               animate="visible"
               variants={ANIMATION_VARIANTS.fadeIn}
@@ -45,55 +46,66 @@ const ProjectsGrid = ({ projects, isLoading }) => {
         <AnimatePresence mode="wait">
           {projects.length > 0 ? (
             <motion.div
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8"
               initial="hidden"
               animate="visible"
               variants={ANIMATION_VARIANTS.staggerContainer}
             >
               {projects.map((project, index) => (
-                <ProjectCard key={project.id} project={project} index={index} />
+                <div key={project.id} className="w-full">
+                  <ProjectCard project={project} index={index} />
+                </div>
               ))}
             </motion.div>
           ) : (
             <motion.div
-              className="text-center py-20"
+              className="text-center py-12 sm:py-16 md:py-20 px-4"
               initial="hidden"
               animate="visible"
               variants={ANIMATION_VARIANTS.slideUp}
             >
-              <div className="text-6xl mb-4">🔍</div>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+              <div className="text-4xl sm:text-5xl md:text-6xl mb-4">🔍</div>
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-2">
                 No projects found
               </h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-6">
-                Try adjusting your search criteria or clearing some filters
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-6 max-w-md mx-auto">
+                Try adjusting your search criteria or clearing some filters to discover more AI projects
               </p>
+              
+              {/* Suggested actions */}
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
+                <motion.button
+                  onClick={() => {
+                    // This would typically trigger a filter clear
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-cyan-500 to-emerald-500 hover:from-cyan-600 hover:to-emerald-600 text-white rounded-lg sm:rounded-xl font-medium transition-all duration-300 text-sm sm:text-base w-full sm:w-auto"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Clear All Filters
+                </motion.button>
+                <motion.button
+                  onClick={() => {
+                    const searchBar = document.querySelector('input[type="text"]');
+                    if (searchBar) {
+                      searchBar.focus();
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                  }}
+                  className="px-4 sm:px-6 py-2 sm:py-3 border-2 border-cyan-400/50 text-cyan-400 hover:bg-cyan-400/10 rounded-lg sm:rounded-xl font-medium transition-all duration-300 text-sm sm:text-base w-full sm:w-auto"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Try New Search
+                </motion.button>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* Add Project Guide */}
-        <motion.div 
-          className="mt-16 p-8 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800"
-          initial="hidden"
-          animate="visible"
-          variants={ANIMATION_VARIANTS.slideUp}
-          transition={{ delay: 0.3 }}
-        >
-          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-            🚀 Want to add a new project?
-          </h3>
-          <p className="text-gray-600 dark:text-gray-300 mb-4">
-            Simply add your project data to the AI_PROJECTS array in <code className="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded">src/data/projects.js</code>
-          </p>
-          <div className="text-sm text-gray-600 dark:text-gray-300 space-y-2">
-            <div>• <strong>Basic info:</strong> name, description, category</div>
-            <div>• <strong>Links:</strong> liveUrl, githubUrl</div>
-            <div>• <strong>Tech stack:</strong> skills array</div>
-            <div>• <strong>Visual:</strong> image/gif path</div>
-            <div>• <strong>Status:</strong> live/development/maintenance</div>
-          </div>
-        </motion.div>
+        {/* Add Project Guide - Responsive */}
+ 
       </div>
     </section>
   );
